@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<meta charset="utf-8">	
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="630320249781-e9malj5ssk1up3pbmgrsvfa79hpkmtfk.apps.googleusercontent.com">    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>	 
+    <script src="https://apis.google.com/js/platform.js" async defer></script>   
+  </head>
+  <body>      
+    	<div class="container">    		
+	    	<div class="row">
+	    	 <div class="col-sm-6 col-md-4 col-md-offset-4">
+	    	  <div class="account-wall">
+	    		 <form class="form-signin">
+		    		 <h1 class="login-title text-center">Login to continue to WebTracker</h1>
+		    		 <div class="g-signin2" data-onsuccess="onSignIn"></div>
+	    		 </form>
+	    	</div>
+	    	</div>	    	
+    	</div>    	
+        </div>
+   
+    <script>
+      function onSignIn(googleUser) {
+    	  var id_token = googleUser.getAuthResponse().id_token;
+          console.log("ID Token: " + id_token);
+        if ($('span.abcRioButtonContents span:last').text() != 'Signed in')
+        	{
+        	
+        	 $.ajax({
+         		  method: "POST",
+         		  url: "http://localhost/webtracker",
+         		  //url: "#",
+         		  data: {"token":id_token}
+         		})
+         		  .done(function( msg, txtStatus, jqXHR) {	
+         			console.log("ID Token sent to login: ");
+         		  });        		
+        	}
+        else{
+        	window.location.href = "http://localhost/webtracker/app/group/createGroup.html?token="+id_token;
+        }
+        
+       
+        
+      };
+    </script>
+  </body>
+</html>
